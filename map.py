@@ -1,31 +1,40 @@
 import plotly.graph_objects as go
 import pandas as pd
 
-# Load country data (using Plotly's built-in dataset)
-df = pd.read_csv("https://raw.githubusercontent.com/plotly/datasets/master/2014_world_gdp_with_codes.csv")
+# Load the built-in dataset of country names and codes
+df = pd.read_csv('https://raw.githubusercontent.com/plotly/datasets/master/2014_world_gdp_with_codes.csv')
 
 # Create the choropleth map
 fig = go.Figure(data=go.Choropleth(
-    locations=df['CODE'],  # ISO-3 country codes
-    z=df['GDP (BILLIONS)'],  # Values for the color scale (you can change this)
-    text=df['COUNTRY'],  # Country names for hover text
-    colorscale='Viridis',
+    locations = df['CODE'],
+    z = df['GDP (BILLIONS)'],
+    text = df['COUNTRY'],
+    colorscale = 'oranges',
     autocolorscale=False,
     reversescale=True,
-    marker_line_color='darkgray',
+    marker_line_color='orange',
     marker_line_width=0.5,
-    colorbar_tickprefix='$',
-    colorbar_title='GDP (Billions USD)',
+    colorbar_title = 'GDP Billions USD',
 ))
 
+# Update the layout
 fig.update_layout(
-    title_text='World GDP by Aman Khan',
+    title_text='World Map By Aman Khan',
     geo=dict(
         showframe=False,
         showcoastlines=True,
         projection_type='equirectangular'
     ),
-    margin=dict(l=0, r=0, t=50, b=0) #margins to prevent the plot from being too large.
+    annotations = [dict(
+        x=0.55,
+        y=0.1,
+        xref='paper',
+        yref='paper',
+        text='Source: <a href="https://www.cia.gov/library/publications/the-world-factbook/fields/2195.html">\
+            CIA World Factbook</a>',
+        showarrow = False
+    )]
 )
 
+# Show the figure
 fig.show()
